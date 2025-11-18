@@ -1,61 +1,61 @@
 
 ## Código
 ### Servo
-#include <Servo.h>
-
-Servo servo;
-const int PIN_SERVO = 10;
-
-void setup() {
-  servo.attach(PIN_SERVO); // D9
-}
-
-void loop() {
- for(int i  = 0; i<=180; i+=20){
-   servo.write(i);
-   delay(150);
- }
- for(int i  = 180; i>=0; i-=20){
-   servo.write(i);
-   delay(150);
- }
-}
+    #include <Servo.h>
+    
+    Servo servo;
+    const int PIN_SERVO = 10;
+    
+    void setup() {
+      servo.attach(PIN_SERVO); // D9
+    }
+    
+    void loop() {
+     for(int i  = 0; i<=180; i+=20){
+       servo.write(i);
+       delay(150);
+     }
+     for(int i  = 180; i>=0; i-=20){
+       servo.write(i);
+       delay(150);
+     }
+    }
 ### Ultrasonidos
-int trigPin = 13;
-int echoPin = 12;
-float duration, distance;
-float umbral = 20;
-
-void setup() {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-
-  Serial.begin(9600);
-
-}
-
-void loop() {
-  
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-
-  duration = pulseIn(echoPin, HIGH);
-  distance = (duration*.0343)/2;
-  Serial.print("Distance: ");
-
-  
-  delay(100);
-  Serial.println(distance);
-  if(distance < umbral){
-      Serial.print(" Muy cerca ");
-  }
-  else{
-    Serial.print(" Lejos ");
-  }
-}
+    int trigPin = 13;
+    int echoPin = 12;
+    float duration, distance;
+    float umbral = 20;
+    
+    void setup() {
+      pinMode(trigPin, OUTPUT);
+      pinMode(echoPin, INPUT);
+    
+      Serial.begin(9600);
+    
+    }
+    
+    void loop() {
+      
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+    
+      duration = pulseIn(echoPin, HIGH);
+      distance = (duration*.0343)/2;
+      Serial.print("Distance: ");
+    
+      
+      delay(100);
+      Serial.println(distance);
+      if(distance < umbral){
+          Serial.print(" Muy cerca ");
+      }
+      else{
+        Serial.print(" Lejos ");
+      }
+    }
 
 ### Giro del Ultrasonidos cuando detecta un objeto cerca
     #include <Servo.h>
@@ -123,6 +123,106 @@ void loop() {
   
 
   
-}
+    }
+### Motores
+    //    The direction of the car's movement
+    //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
+    //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
+    //  HIGH  HIGH  LOW   HIGH  HIGH  LOW   Car is runing back
+    //  HIGH  HIGH  LOW   HIGH  LOW   HIGH  Car is turning left
+    //  HIGH  HIGH  HIGH  LOW   HIGH  LOW   Car is turning right
+    //  HIGH  HIGH  LOW   LOW   LOW   LOW   Car is stoped
+    //  HIGH  HIGH  HIGH  HIGH  HIGH  HIGH  Car is stoped
+    //  LOW   LOW   N/A   N/A   N/A   N/A   Car is stoped
+    
+    // Pines correctos para Elegoo Smart Car V1.1
+    #define PWMA 5
+    #define PWMB 6
+    #define AIN1 8
+    #define AIN2 11
+    #define BIN1 12
+    #define BIN2 13
+    #define STBY 7
+    
+    void setup() {
+      Serial.begin(9600);
+    
+      pinMode(PWMA, OUTPUT);
+      pinMode(PWMB, OUTPUT);
+      pinMode(AIN1, OUTPUT);
+      pinMode(AIN2, OUTPUT);
+      pinMode(BIN1, OUTPUT);
+      pinMode(BIN2, OUTPUT);
+      pinMode(STBY, OUTPUT);
+    
+      digitalWrite(STBY, HIGH); // ¡IMPORTANTE!
+    }
+    
+    void loop() { forward(); delay(10000); back(); delay(10000); right(); delay(10000); left(); delay(10000); stop(); delay(20000); }
+    
+    void forward() {
+      digitalWrite(STBY, HIGH);
+      
+      analogWrite(PWMA, 255);
+      analogWrite(PWMB, 255);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("Forward");
+    }
+    
+    void back() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, 255);
+      analogWrite(PWMB, 255);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("Back");
+    }
+    
+    void left() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, 255);
+      analogWrite(PWMB, 255);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("Left");
+    }
+    
+    void right() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, 255);
+      analogWrite(PWMB, 255);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("Right");
+    }
+    
+    void stop() {
+      digitalWrite(PWMA, 0);
+      digitalWrite(PWMB, 0);
+      digitalWrite(STBY, LOW);
+    
+      Serial.println("Stop");
+    }
+
 
 
