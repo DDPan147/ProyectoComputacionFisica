@@ -9,3 +9,6 @@ Empezamos con los códigos de los dos diferentes modos que va a tener el coche. 
 
 ### Dia 18/11/2025
 Empezamos a aplicar los códigos al modelo de coche que nos ha prestado el profesor.
+
+### Dia 20/11/2025
+Hemos conseguido que funcione las ruedas del coche, con los avances que tenemos actualmente procedemos a juntar código para que el coche gire cuando detecte un obstáculo.
