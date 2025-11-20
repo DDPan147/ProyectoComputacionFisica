@@ -379,6 +379,182 @@
       Serial.println("Stop");
     }
 
+### Pruebas con el mando y el coche
+
+    //    The direction of the car's movement
+    //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
+    //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
+    //  HIGH  HIGH  LOW   HIGH  HIGH  LOW   Car is runing back
+    //  HIGH  HIGH  LOW   HIGH  LOW   HIGH  Car is turning left
+    //  HIGH  HIGH  HIGH  LOW   HIGH  LOW   Car is turning right
+    //  HIGH  HIGH  LOW   LOW   LOW   LOW   Car is stoped
+    //  HIGH  HIGH  HIGH  HIGH  HIGH  HIGH  Car is stoped
+    //  LOW   LOW   N/A   N/A   N/A   N/A   Car is stoped
+    
+    // Pines correctos para Elegoo Smart Car V1.1
+    #define PWMA 5
+    #define PWMB 6
+    #define AIN1 7
+    #define AIN2 11
+    #define BIN1 8
+    #define BIN2 13
+    #define STBY 3
+    #define TimeLapse 1000
+    #define Speed 125
+    
+    int trigPin = 13;
+    int echoPin = 12;
+    float duration, distance;
+    float umbral = 20;
+    bool movement=true;
+    
+    #include <Servo.h>
+    
+    Servo servo;
+    const int PIN_SERVO = 10;
+    
+    #include <IRremote.h>
+    const int PIr = 2;
+    int comando;
+    int lastCommand;
+    
+    void setup() {
+      Serial.begin(9600);
+    
+      pinMode(PWMA, OUTPUT);
+      pinMode(PWMB, OUTPUT);
+      pinMode(AIN1, OUTPUT);
+      pinMode(AIN2, OUTPUT);
+      pinMode(BIN1, OUTPUT);
+      pinMode(BIN2, OUTPUT);
+      pinMode(STBY, OUTPUT);
+    
+      digitalWrite(STBY, HIGH); // ¡IMPORTANTE!
+    
+      servo.attach(PIN_SERVO); // D9
+      servo.write(90);
+    
+      pinMode(trigPin, OUTPUT);
+      pinMode(echoPin, INPUT);
+    
+      IrReceiver.begin(PIr); 
+    }
+    
+    void loop() { 
+      if(IrReceiver.decode()){
+        Serial.print("Codigo recibido: ");
+    	  comando = IrReceiver.decodedIRData.command;
+    
+        switch(comando){
+          case 24:
+          forward();
+          break;
+          case 8:
+          left();
+          break;
+          case 90:
+          right();
+          break;
+          case 82:
+          back();
+          break;
+          default:
+          stop();
+    
+        }
+      }
+      comando = 0;
+    }
+    
+    
+    bool UltrasonidosLogic(){
+      digitalWrite(trigPin, LOW);
+      delayMicroseconds(2);
+      digitalWrite(trigPin, HIGH);
+      delayMicroseconds(10);
+      digitalWrite(trigPin, LOW);
+    
+      duration = pulseIn(echoPin, HIGH);
+      distance = (duration*.0343)/2;
+      Serial.print("Distance: ");
+    
+      
+      delay(100);
+      Serial.println(distance);
+      if(distance < umbral){
+          Serial.print(" Muy cerca ");
+          movement=false;
+          return true;
+      }
+      else{
+        Serial.print(" Lejos ");
+        return false;
+      }
+    }
+    void forward() {
+      digitalWrite(STBY, HIGH);
+      
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("Forward");
+    }
+    
+    void back() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("Back");
+    }
+    
+    void left() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("Left");
+    }
+    
+    void right() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("Right");
+    }
+    
+    void stop() {
+      digitalWrite(PWMA, 0);
+      digitalWrite(PWMB, 0);
+      digitalWrite(STBY, LOW);
+    
+      Serial.println("Stop");
+    }
+
 
 
 
