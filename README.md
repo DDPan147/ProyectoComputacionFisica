@@ -1,6 +1,18 @@
 # ProyectoComputacionFisica
 Repositorio de GitHub que funciona como memoria técnica del proyecto de Computación Física
 
+## Introduccion del Proyecto
+En este proyecto se busca realizar un cochecito el cual funciona por 2 modos diferentes: 
+#### Autónomo
+En este modo el coche funcionara de manera independiente y detectará varios obstaculos con el objetivo de no chocar contra ellos.
+#### Manual
+En este modo el coche se controlará con un mando a distancia el cual indicará al cochecito las acciones a realizar
+
+## Miembros del equipo
+#### David Garcia Pan
+#### Gabriel Zafra Tanco
+
+## Registro de Trabajo
 ### Día 11/11/2025:
 Hoy empezamos el desarrollo del proyecto. Cristian, el profesor, nos ha enseñado un modelo de coche para tener una referencia de lo que se quiere obtener
 
