@@ -559,7 +559,7 @@
     }
 
 ### Pruebas para juntar los modos automatico y manual
-
+    
     //    The direction of the car's movement
     //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
     //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
@@ -656,11 +656,31 @@
       
     }
     
+    // void ManualMode(){
+    //   if(IrReceiver.decode()){
+    //     //Serial.print("Codigo recibido: ");
+    // 	  comando = IrReceiver.decodedIRData.command;
+    //     switch(comando){
+    //       case 24:
+    //       forward();
+    //       break;
+    //       case 8:
+    //       left();
+    //       break;
+    //       case 90:
+    //       right();
+    //       break;
+    //       case 82:
+    //       back();
+    //       break;
+    //       case 28:
+    //       stop();
+    //     }
+    //     IrReceiver.resume();
+    //   }
+    // }
     void ManualMode(){
-      if(IrReceiver.decode()){
-        //Serial.print("Codigo recibido: ");
-    	  comando = IrReceiver.decodedIRData.command;
-        switch(comando){
+      switch(comando){
           case 24:
           forward();
           break;
@@ -676,10 +696,7 @@
           case 28:
           stop();
         }
-        IrReceiver.resume();
-      }
     }
-    
     void AutomaticMode(){
        if(!UltrasonidosLogic()&&movement){
         forward();
@@ -780,9 +797,6 @@
     
       Serial.println("Stop");
     }
-    
-
-
 
 
 
