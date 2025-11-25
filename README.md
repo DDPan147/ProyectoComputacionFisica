@@ -24,3 +24,6 @@ Empezamos a aplicar los códigos al modelo de coche que nos ha prestado el profe
 
 ### Dia 20/11/2025
 Hemos conseguido que funcione las ruedas del coche, con los avances que tenemos actualmente procedemos a juntar código para que el coche gire cuando detecte un obstáculo.
+
+### Dia 25/11/2025
+Hemos conseguido que el coche cambie entre el modo automatico y el manual, pulsando un botón especifico del mando 
