@@ -381,7 +381,7 @@
 
 ### Pruebas con el mando y el coche
 
-    //    The direction of the car's movement
+        //    The direction of the car's movement
     //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
     //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
     //  HIGH  HIGH  LOW   HIGH  HIGH  LOW   Car is runing back
@@ -414,9 +414,11 @@
     const int PIN_SERVO = 10;
     
     #include <IRremote.h>
-    const int PIr = 2;
+    const int PIr = 9;
     int comando;
     int lastCommand;
+    
+    bool isPressed;
     
     void setup() {
       Serial.begin(9600);
@@ -429,7 +431,7 @@
       pinMode(BIN2, OUTPUT);
       pinMode(STBY, OUTPUT);
     
-      digitalWrite(STBY, HIGH); // ¡IMPORTANTE!
+      digitalWrite(STBY, HIGH); 
     
       servo.attach(PIN_SERVO); // D9
       servo.write(90);
@@ -444,7 +446,6 @@
       if(IrReceiver.decode()){
         Serial.print("Codigo recibido: ");
     	  comando = IrReceiver.decodedIRData.command;
-    
         switch(comando){
           case 24:
           forward();
@@ -458,12 +459,14 @@
           case 82:
           back();
           break;
-          default:
+          case 28:
           stop();
-    
         }
+        IrReceiver.resume();
       }
-      comando = 0;
+      
+      
+      
     }
     
     
@@ -554,6 +557,8 @@
     
       Serial.println("Stop");
     }
+
+
 
 
 
