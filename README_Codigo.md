@@ -1,5 +1,76 @@
 
 ## Código
+### Prototipo 3
+    void Prototipo3(){
+      float distanciaIzq;
+      float distanciaDer;
+      if(!UltrasonidosLogic() && movement){
+        forward();
+      }
+      else{
+        GirarServoDerecha2();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda2();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          slightlyRight();
+          delay(tiempoDeGiro);
+        }
+        else{
+          slightlyLeft();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+      
+        
+    }
+
+### Prototipo 2
+    void Prototipo2(){
+    
+      float Deteccion = 90;
+      
+       if(!UltrasonidosLogic()&&movement){
+        forward();
+        for(int i = Deteccion; i <=130; i+=20){
+        servo.write(i);
+        if(UltrasonidosLogic())
+        {
+          Deteccion=i;
+          break;
+        }
+        delay(100);
+      }
+        for(int i = Deteccion; i >=50; i-=20){
+        servo.write(i);
+        if(UltrasonidosLogic())
+        {
+          Deteccion=i;
+          break;
+        }
+        delay(100);
+      }
+       }
+      else{
+        if(Deteccion>=90){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        //Prototipo1();
+    
+      }
+      delay(200);
+      movement=true;
+    }
+
+
 ### Prototipo 1
     //    The direction of the car's movement
     //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
