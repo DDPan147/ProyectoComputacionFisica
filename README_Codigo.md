@@ -1,5 +1,50 @@
 
 ## Código
+### Prototipo 4
+    void Prototipo4(){
+      float distanciaIzq;
+      float distanciaDer;
+      if(!UltrasonidosLogic() && movement){
+        forward();
+      }
+      else if(muyCerca){
+        stop();
+        delay(777);
+        GirarServoDerecha();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+      else{
+        GirarServoDerecha2();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda2();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          slightlyLeft();
+          delay(tiempoDeGiro);
+        }
+        else{
+          slightlyRight();
+          
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+    }
 ### Prototipo 3
     void Prototipo3(){
       float distanciaIzq;
