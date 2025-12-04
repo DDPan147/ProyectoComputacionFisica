@@ -28,6 +28,7 @@ Los componentes que tiene son los siguientes:
 #### Componentes que NO utilizamos
 - 1 Cámara para detectar caras.
 - 1 Siguelineas
+- 1 Giroscopio
 
 ## Registro de Trabajo
 ### Día 11/11/2025:
