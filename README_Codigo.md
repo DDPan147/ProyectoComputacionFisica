@@ -70,8 +70,35 @@
       movement=true;
     }
 
-
 ### Prototipo 1
+    void Prototipo1(){
+       float distanciaIzq;
+      float distanciaDer;
+       if(!UltrasonidosLogic()&&movement){
+        forward();
+      }
+      else{
+        stop();
+        delay(777);
+        GirarServoDerecha();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+    }
+
+### Código general
     //    The direction of the car's movement
     //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
     //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
@@ -168,30 +195,6 @@
       
       
     }
-    
-    // void ManualMode(){
-    //   if(IrReceiver.decode()){
-    //     //Serial.print("Codigo recibido: ");
-    // 	  comando = IrReceiver.decodedIRData.command;
-    //     switch(comando){
-    //       case 24:
-    //       forward();
-    //       break;
-    //       case 8:
-    //       left();
-    //       break;
-    //       case 90:
-    //       right();
-    //       break;
-    //       case 82:
-    //       back();
-    //       break;
-    //       case 28:
-    //       stop();
-    //     }
-    //     IrReceiver.resume();
-    //   }
-    // }
     void ManualMode(){
       switch(comando){
           case 24:
@@ -211,31 +214,7 @@
         }
     }
     void AutomaticMode(){
-      float distanciaIzq;
-      float distanciaDer;
-       if(!UltrasonidosLogic()&&movement){
-        forward();
-      }
-      else{
-        stop();
-        delay(777);
-        GirarServoDerecha();
-        distanciaDer = CuantaDistancia();
-        GirarServoIzquierda();
-        distanciaIzq = CuantaDistancia();
-        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
-          right();
-          delay(tiempoDeGiro);
-        }
-        else{
-          left();
-          delay(tiempoDeGiro);
-        }
-        servo.write(90);
-        delay(200);
-        movement=true;
-      }
-      
+      //Prototipo Automatico
     }
     
     bool EsMasGrandeLaDerecha(float derecha, float izquierda){
