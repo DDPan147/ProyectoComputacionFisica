@@ -27,3 +27,6 @@ Hemos conseguido que funcione las ruedas del coche, con los avances que tenemos 
 
 ### Dia 25/11/2025
 Hemos conseguido que el coche cambie entre el modo automatico y el manual, pulsando un botón especifico del mando 
+
+### Dia 02/12/2025
+Realización de varios prototipos funcionales. Mejora del modo manual y automatico.
