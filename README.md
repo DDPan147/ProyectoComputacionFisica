@@ -12,6 +12,23 @@ En este modo el coche se controlará con un mando a distancia el cual indicará 
 #### David Garcia Pan
 #### Gabriel Zafra Tanco
 
+## Lista de Componentes y sensores
+Para este proyecto utilizaremos el Kit de Elegoo de un coche inteligente con cámara; sin embargo, no utilizaremos ni la cámara ni el código que venia con él, lo programaremos desde 0. 
+Los componentes que tiene son los siguientes:
+#### Componentes que utilizamos
+- 4 Motores
+- 4 Ruedas
+- 1 Servo motor
+- 1 Sensor de proximidad Ultrasonidos
+- 1 Detector IR
+- 1 Plana Arduino Uno
+- 1 Placa shield encima de la de Arduino Uno
+- 1 Bateria portatil.
+- Chasis para darle forma al coche
+#### Componentes que NO utilizamos
+- 1 Cámara para detectar caras.
+- 1 Siguelineas
+
 ## Registro de Trabajo
 ### Día 11/11/2025:
 Hoy empezamos el desarrollo del proyecto. Cristian, el profesor, nos ha enseñado un modelo de coche para tener una referencia de lo que se quiere obtener
