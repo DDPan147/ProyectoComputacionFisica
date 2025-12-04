@@ -48,3 +48,6 @@ Hemos conseguido que el coche cambie entre el modo automatico y el manual, pulsa
 
 ### Dia 02/12/2025
 Realización de varios prototipos funcionales. Mejora del modo manual y automatico.
+
+### Dia 04/12/2025
+Creado el prototipo final del modo automático del coche, además de regular algunas variables.
