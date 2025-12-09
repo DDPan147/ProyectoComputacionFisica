@@ -56,3 +56,6 @@ Realización de varios prototipos funcionales. Mejora del modo manual y automati
 
 ### Dia 04/12/2025
 Creado el prototipo final del modo automático del coche, además de regular algunas variables.
+
+### Dia 09/12/2025
+Como es el último dia antes de la presentación y ya tenemos el código preparado, nos hemos dedicado a preparar todo lo externo al código para la presentación y entrega de la LiveDemo.
