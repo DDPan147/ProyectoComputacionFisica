@@ -2,6 +2,11 @@
 Repositorio de GitHub que funciona como memoria técnica del proyecto de Computación Física
 
 ## Introduccion del Proyecto
+![Coche1](https://github.com/user-attachments/assets/fd961f10-ff23-49e5-9606-3cd1cd387edf)
+![Coche2](https://github.com/user-attachments/assets/a9c7baf2-b655-48d4-a5a1-d388dfdabef6)
+![Coche 3](https://github.com/user-attachments/assets/489f4370-f4f8-45d9-b95a-4e2f05a3bbb8)
+![Coche4](https://github.com/user-attachments/assets/3e8425ba-fd92-4918-bf03-b22ca6250e5d)
+
 En este proyecto se busca realizar un cochecito el cual funciona por 2 modos diferentes: 
 #### Autónomo
 En este modo el coche funcionara de manera independiente y detectará varios obstaculos con el objetivo de no chocar contra ellos.
