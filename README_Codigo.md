@@ -143,8 +143,8 @@
       }
     }
 
-### Código general
-    //    The direction of the car's movement
+### Código completo
+       //    The direction of the car's movement
     //  ENA   ENB   IN1   IN2   IN3   IN4   Description  
     //  HIGH  HIGH  HIGH  LOW   LOW   HIGH  Car is runing forward
     //  HIGH  HIGH  LOW   HIGH  HIGH  LOW   Car is runing back
@@ -163,14 +163,17 @@
     #define BIN2 13
     #define STBY 3
     #define TimeLapse 1000
-    #define Speed 125
+    #define Speed 95
+    #define TurnSpeed 30
     
     int trigPin = 13;
     int echoPin = 12;
     float duration, distance;
-    float umbral = 30;
-    int tiempoDeGiro = 450;
+    float umbral = 120;
+    float umbralCerca = 50;
+    int tiempoDeGiro = 300;
     bool movement=true;
+    bool muyCerca = false;
     
     #include <Servo.h>
     
@@ -183,7 +186,7 @@
     int lastCommand;
     
     bool isPressed;
-    bool isManual;
+    bool isManual = true;
     bool canChange;
     
     void setup() {
@@ -254,12 +257,164 @@
           case 82:
           back();
           break;
+          case 12:
+          slightlyLeft();
+          break;
+          case 66:
+          slightlyBackLeft();
+          break;
+          case 94:
+          slightlyRight();
+          break;
+          case 74:
+          slightlyBackRight();
+          break;
           case 28:
           stop();
         }
     }
     void AutomaticMode(){
-      //Prototipo Automatico
+      Prototipo4();
+    }
+    
+    void Prototipo4(){
+      float distanciaIzq;
+      float distanciaDer;
+      if(!UltrasonidosLogic() && movement){
+        forward();
+      }
+      else if(muyCerca){
+        stop();
+        delay(777);
+        GirarServoDerecha();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+      else{
+        GirarServoDerecha2();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda2();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          slightlyLeft();
+          delay(tiempoDeGiro);
+        }
+        else{
+          slightlyRight();
+          
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+    }
+    
+    void Prototipo3(){
+      float distanciaIzq;
+      float distanciaDer;
+      if(!UltrasonidosLogic() && movement){
+        forward();
+      }
+      else{
+        GirarServoDerecha2();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda2();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          slightlyRight();
+          delay(tiempoDeGiro);
+        }
+        else{
+          slightlyLeft();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
+      
+        
+    }
+    
+    void Prototipo2(){
+    
+      float Deteccion = 90;
+      
+       if(!UltrasonidosLogic()&&movement){
+        forward();
+        for(int i = Deteccion; i <=130; i+=20){
+        servo.write(i);
+        if(UltrasonidosLogic())
+        {
+          Deteccion=i;
+          break;
+        }
+        delay(100);
+      }
+        for(int i = Deteccion; i >=50; i-=20){
+        servo.write(i);
+        if(UltrasonidosLogic())
+        {
+          Deteccion=i;
+          break;
+        }
+        delay(100);
+      }
+       }
+      else{
+        if(Deteccion>=90){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        //Prototipo1();
+    
+      }
+      delay(200);
+      movement=true;
+    }
+    
+    void Prototipo1(){
+       float distanciaIzq;
+      float distanciaDer;
+       if(!UltrasonidosLogic()&&movement){
+        forward();
+      }
+      else{
+        stop();
+        delay(777);
+        GirarServoDerecha();
+        distanciaDer = CuantaDistancia();
+        GirarServoIzquierda();
+        distanciaIzq = CuantaDistancia();
+        if(EsMasGrandeLaDerecha(distanciaDer, distanciaIzq)){
+          right();
+          delay(tiempoDeGiro);
+        }
+        else{
+          left();
+          delay(tiempoDeGiro);
+        }
+        servo.write(90);
+        delay(200);
+        movement=true;
+      }
     }
     
     bool EsMasGrandeLaDerecha(float derecha, float izquierda){
@@ -278,12 +433,27 @@
       }
     }
     
+    void GirarServoDerecha2(){
+      for(int i = 90; i <=130; i+=10){
+        servo.write(i);
+        delay(80);
+      }
+    }
+    
     void GirarServoIzquierda(){
       for(int i = 90; i >=0; i-=45){
         servo.write(i);
         delay(100);
       }
     }
+    
+    void GirarServoIzquierda2(){
+      for(int i = 90; i >=50; i-=10){
+        servo.write(i);
+        delay(80);
+      }
+    }
+    
     float CuantaDistancia(){
       float durationXd;
       float distanceXd;
@@ -319,6 +489,10 @@
       if(distance < umbral){
           //Serial.print(" Muy cerca ");
           movement=false;
+          muyCerca = false;
+          if(distance < umbralCerca){
+            muyCerca = true;
+          }
           return true;
       }
       else{
@@ -368,6 +542,34 @@
       Serial.println("Left");
     }
     
+    void slightlyLeft(){
+      digitalWrite(STBY, HIGH);
+      
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, TurnSpeed);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("slightlyLeft");
+    }
+    
+    void slightlyBackLeft() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, Speed);
+      analogWrite(PWMB, TurnSpeed);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("SlightlyBackLeft");
+    }
+    
     void right() {
       digitalWrite(STBY, HIGH);
     
@@ -382,6 +584,34 @@
       Serial.println("Right");
     }
     
+    void slightlyRight(){
+      digitalWrite(STBY, HIGH);
+      
+      analogWrite(PWMA, TurnSpeed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, HIGH);
+      digitalWrite(AIN2, LOW);
+      digitalWrite(BIN1, HIGH);
+      digitalWrite(BIN2, LOW);
+    
+      Serial.println("slightlyRight");
+    }
+    
+    void slightlyBackRight() {
+      digitalWrite(STBY, HIGH);
+    
+      analogWrite(PWMA, TurnSpeed);
+      analogWrite(PWMB, Speed);
+    
+      digitalWrite(AIN1, LOW);
+      digitalWrite(AIN2, HIGH);
+      digitalWrite(BIN1, LOW);
+      digitalWrite(BIN2, HIGH);
+    
+      Serial.println("SlightlyBackRight");
+    }
+    
     void stop() {
       digitalWrite(PWMA, 0);
       digitalWrite(PWMB, 0);
@@ -389,6 +619,8 @@
     
       Serial.println("Stop");
     }
+    
+
 
 
 ### Servo
